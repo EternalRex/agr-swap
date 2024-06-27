@@ -1,0 +1,82 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} build and deploy pipeline
+
+#Triger the build pipeline when there is a merge or a push in main branch
+on:
+  push:
+    branches:
+      - main
+      - "releases/**"
+
+env:
+  RESOURCE-GROUP: agri-swap
+  LOCATION: southeastasia
+  TEMPLATE-FILE: infrastructure/appService.bicep
+  SUBSCRIPTION-ID: 59c9e792-d77c-466c-a367-de2fe70ec751
+  WEBAPP-NAME: agriswap-southeastasia-819225107
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.10.0"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-app
+          path: build/
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: bicep-template
+          path: ${{ env.TEMPLATE-FILE }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-deploy
+    environment:
+      name: "Development"
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: react-app
+          path: react-app
+
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: bicep-template
+          path: bicep-template
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          subscriptionId: ${{ env.SUBSCRIPTION-ID }}
+          resourceGroupName: ${{ env.RESOURCE-GROUP }}
+          template: bicep-template/appService.bicep
+          parameters: "webAppName=${{ env.WEBAPP-NAME }}"
+          failOnStdErr: false
+
+      - name: Publish website to web App
+        if: false
+        uses: Azure/webapps-deploy@v3
+        with:
+          type: ZIP
+          app-name: ${{ env.WEBAPP-NAME }}
+          package: build/
