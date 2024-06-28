@@ -51,6 +51,12 @@ jobs:
           name: bicep-template
           path: ${{ env.TEMPLATE-FILE }}
 
+      - name: Creating artifact zip file
+        run: |
+          cd my-app/build
+          zip -r ../build.zip .
+        working-directory: ${{ github.workspace }}/my-app/build
+
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-deploy
@@ -91,5 +97,5 @@ jobs:
             az webapp deployment source config-zip \
             --resource-group ${{ env.RESOURCE-GROUP }} \
             --name ${{ env.WEBAPP-NAME }} \
-            --src build \
+            --src build.zip \
             --output json
