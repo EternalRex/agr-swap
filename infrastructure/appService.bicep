@@ -1,5 +1,5 @@
 param webAppName string = uniqueString(resourceGroup().id)
-param sku string = 'F1'
+param sku string = 'Free'
 param location string = resourceGroup().location
 param staticWebAppName string = 'AgriSwap${webAppName}'
 
