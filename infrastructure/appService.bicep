@@ -1,12 +1,13 @@
 param webAppName string = uniqueString(resourceGroup().id)
 param sku string = 'F1'
 param location string = resourceGroup().location
+param staticWebAppName string = 'AgriSwap${webAppName}'
 
 
 
 
 resource staticWebApp 'Microsoft.Web/staticSites@2023-12-01'= {
-  name: 'AgriSwapStaticWebApp${webAppName}'
+  name: staticWebAppName
   location: location
   properties:{
     repositoryUrl: 'https://github.com/EternalRex/agr-swap.git'
