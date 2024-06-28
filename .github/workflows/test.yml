@@ -72,16 +72,19 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: deploy
+        uses: azure/arm-deploy@v2
+        with:
           subscriptionId: ${{ env.SUBSCRIPTION-ID }}
           resourceGroupName: ${{ env.RESOURCE-GROUP }}
           template: bicep-template/appService.bicep
-          parameters: "webAppName=${{ env.WEBAPP-NAME }}"
+          parameters: "webAppName=${{ env.WEBAPP-NAME }} location=${{ env.LOCATION }}"
           failOnStdErr: false
 
-      - name: Deploy AgriSwap front end to azure
-        uses: Azure/webapps-deploy@v3
+      - name: Publish Website to Web App
+        uses: Azure/cli@v2
         with:
-          type: ZIP
-          app-name: ${{ env.WEBAPP-NAME }}
-          package: build
-          slot-name: development
+          inlineScript: |
+            az webapp deploy --name ${{ env.WEBAPP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --src-path build/. --type zip
