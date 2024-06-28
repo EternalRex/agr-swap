@@ -39,22 +39,22 @@ jobs:
           npm run build
           echo "Current directory: ${pwd}"
 
+      - name: Creating artifact zip file
+        run: |
+          cd ${{ github.workspace }}/my-app
+          zip -r ../build.zip .
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: agri-swap-front-end-artifact
-          path: my-app/build
+          path: ${{ github.workspace }}/my-app/build.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: bicep-template
           path: ${{ env.TEMPLATE-FILE }}
-
-      - name: Creating artifact zip file
-        run: |
-          cd ${{ github.workspace }}/my-app
-          zip -r ../build.zip .
 
   deploy:
     runs-on: ubuntu-latest
@@ -66,7 +66,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: agri-swap-front-end-artifact
-          path: build
+          path: ${{ github.workspace }}/my-app/build.zip
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -96,5 +96,5 @@ jobs:
             az webapp deployment source config-zip \
             --resource-group ${{ env.RESOURCE-GROUP }} \
             --name ${{ env.WEBAPP-NAME }} \
-            --src build.zip
+            --src my-app/build.zip
             --output json
