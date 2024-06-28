@@ -53,9 +53,8 @@ jobs:
 
       - name: Creating artifact zip file
         run: |
-          cd my-app/build
+          cd ${{ github.workspace }}/my-app
           zip -r ../build.zip .
-        working-directory: ${{ github.workspace }}/my-app/build
 
   deploy:
     runs-on: ubuntu-latest
