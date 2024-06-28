@@ -86,7 +86,7 @@ jobs:
           resourceGroupName: ${{ env.RESOURCE-GROUP }}
           template: bicep-template/appService.bicep
           parameters: |
-            "staticWebAppName=${{ env.STATIC-WEB-APP-NAME }} location=${{ env.LOCATION }}"
+            "location=${{ env.LOCATION }}"
           failOnStdErr:
 
       - name: Deploy static web app
