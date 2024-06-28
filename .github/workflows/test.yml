@@ -89,8 +89,8 @@ jobs:
           failOnStdErr:
 
       - name: Publish Website to Web App
-        uses: Azure/cli@v1
+        uses: Azure/cli@v2.61.0
         with:
           azcliversion: latest
           inlineScript: |
-            az webapp deploy --name ${{ env.WEBAPP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --src-path agri-swap-front-end-artifact/build.zip --type zip --async true
+            az webapp deploy --name ${{ env.WEBAPP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --src-path agri-swap-front-end-artifact/build.zip --type zip
