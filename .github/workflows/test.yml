@@ -35,13 +35,13 @@ jobs:
 
       - name: Build application
         run: |
-          cd my-app 
+          cd agrswapapp
           npm run build
           echo "Current directory: ${pwd}"
 
       - name: Creating artifact zip file
         run: |
-          cd my-app
+          cd agrswapapp
           zip -r ../build.zip .
 
       - name: Upload artifact
