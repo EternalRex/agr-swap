@@ -7,7 +7,11 @@ var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 resource appServicePlan 'Microsoft.Web/serverfarms@2023-12-01' = {
   name: appServicePlanName
   location: location
+  properties:{
+    reserved: true
+  }
   sku:{
+    name: sku
     tier: 'Free'
     size: sku
   }
