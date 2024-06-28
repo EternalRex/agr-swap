@@ -10,7 +10,7 @@ on:
 
 env:
   RESOURCE-GROUP: agri-swap-group
-  LOCATION: southeastasia
+  LOCATION: eastasia
   TEMPLATE-FILE: infrastructure/appService.bicep
   SUBSCRIPTION-ID: 59c9e792-d77c-466c-a367-de2fe70ec751
   STATIC-WEB-APP-NAME: agriswap-southeastasia-819225107
