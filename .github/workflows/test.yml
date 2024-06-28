@@ -89,7 +89,7 @@ jobs:
           failOnStdErr:
 
       - name: Publish Website to Web App
-        uses: Azure/cli@v2.61.0
+        uses: Azure/cli@v2
         with:
           azcliversion: latest
           inlineScript: |
