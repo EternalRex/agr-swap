@@ -9,7 +9,7 @@ on:
       - "releases/**"
 
 env:
-  RESOURCE-GROUP: agri-swap-group
+  RESOURCE-GROUP: agriswap-group
   LOCATION: eastasia
   TEMPLATE-FILE: infrastructure/appService.bicep
   SUBSCRIPTION-ID: 59c9e792-d77c-466c-a367-de2fe70ec751
