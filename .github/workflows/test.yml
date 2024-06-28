@@ -39,13 +39,13 @@ jobs:
           npm run build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
-          name: my-app
+          name: agri-swap-front-end-artifact
           path: build/
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: bicep-template
           path: ${{ env.TEMPLATE-FILE }}
@@ -57,10 +57,10 @@ jobs:
       name: "Development"
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
-          name: my-app
-          path: my-app/build/
+          name: agri-swap-front-end-artifact
+          path: build/agri-swap-front-end-artifact
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
