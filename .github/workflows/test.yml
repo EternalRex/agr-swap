@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: agri-swap-front-end-artifact
-          path: my-app
+          path: build.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
