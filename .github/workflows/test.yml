@@ -91,6 +91,6 @@ jobs:
 
       - name: Deploy static web app
         env:
-          AZURE_STATIC_WEB_APPS_AUTH_TOKEN: ${{ env.PERSONAL_TOKEN_GITHUB }}
+          AZURE_STATIC_WEB_APPS_AUTH_TOKEN: ${{ secrets.PERSONAL_TOKEN_GITHUB }}
         run: |
           az staticwebapp create --name ${{ env.STATIC-WEB-APP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --source https://github.com/EternalRex/agr-swap.git --branch main --location ${{ env.LOCATION }}
