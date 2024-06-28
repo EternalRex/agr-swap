@@ -1,1 +1,23 @@
 Adding git ignore file
+
+# dependencies
+agrswapapp/node_modules/
+agrswapapp/.pnp
+agrswapapp/.pnp.js
+
+# testing
+agrswapapp/coverage/
+
+# production
+agrswapapp/build/
+
+# misc
+agrswapapp/.DS_Store
+agrswapapp/.env.local
+agrswapapp/.env.development.local
+agrswapapp/.env.test.local
+agrswapapp/.env.production.local
+
+agrswapapp/npm-debug.log*
+agrswapapp/yarn-debug.log*
+agrswapapp/yarn-error.log*
