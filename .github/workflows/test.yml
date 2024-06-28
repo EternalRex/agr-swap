@@ -93,7 +93,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az webapp deployment source config-zip \
+            az webapp deploy \
             --resource-group ${{ env.RESOURCE-GROUP }} \
             --name ${{ env.WEBAPP-NAME }} \
             --src agri-swap-front-end-artifact/build.zip
