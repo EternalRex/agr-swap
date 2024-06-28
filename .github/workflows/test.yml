@@ -41,14 +41,14 @@ jobs:
 
       - name: Creating artifact zip file
         run: |
-          cd ${{ github.workspace }}/my-app
+          cd my-app
           zip -r ../build.zip .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: agri-swap-front-end-artifact
-          path: ${{ github.workspace }}/my-app/build.zip
+          path: my-app/build.zip
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
