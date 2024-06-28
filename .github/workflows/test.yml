@@ -9,11 +9,11 @@ on:
       - "releases/**"
 
 env:
-  RESOURCE-GROUP: agri-swap
+  RESOURCE-GROUP: agri-swap-group
   LOCATION: southeastasia
   TEMPLATE-FILE: infrastructure/appService.bicep
   SUBSCRIPTION-ID: 59c9e792-d77c-466c-a367-de2fe70ec751
-  WEBAPP-NAME: agriswap-southeastasia-819225107
+  STATIC-WEB-APP-NAME: agriswap-southeastasia-819225107
 
 jobs:
   build-and-deploy:
@@ -85,12 +85,9 @@ jobs:
           subscriptionId: ${{ env.SUBSCRIPTION-ID }}
           resourceGroupName: ${{ env.RESOURCE-GROUP }}
           template: bicep-template/appService.bicep
-          parameters: "webAppName=${{ env.WEBAPP-NAME }} location=${{ env.LOCATION }}"
+          parameters: "staticWebAppName=${{ env.STATIC-WEB-APP-NAME }} location=${{ env.LOCATION }}"
           failOnStdErr:
 
-      - name: Publish Website to Web App
-        uses: Azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az webapp deploy --name ${{ env.WEBAPP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --src-path agri-swap-front-end-artifact/build.zip --type zip --timeout 360
+      - name: Deploy static web app
+        run: |
+          az staticwebapp create --name ${{ env.STATIC-WEB-APP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --source . --location ${{ env.LOCATION }} --app-agri-swap-front-end-artifact .
