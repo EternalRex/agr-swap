@@ -81,10 +81,11 @@ jobs:
           resourceGroupName: ${{ env.RESOURCE-GROUP }}
           template: bicep-template/appService.bicep
           parameters: "webAppName=${{ env.WEBAPP-NAME }} location=${{ env.LOCATION }}"
-          failOnStdErr: false
+          failOnStdErr:
 
       - name: Publish Website to Web App
-        uses: Azure/cli@v2
+        uses: Azure/cli@v1
         with:
+          azcliversion: latest
           inlineScript: |
-            az webapp deploy --name ${{ env.WEBAPP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --src-path build --type zip
+            az webapp deployment source config-zip --resource-group $RESOURCE-GROUP --name $WEBAPP-NAME --src build/. --output json
