@@ -93,4 +93,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az webapp deploy --name ${{ env.WEBAPP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --src-path agri-swap-front-end-artifact/build.zip --type zip
+            az webapp deploy --name ${{ env.WEBAPP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --src-path agri-swap-front-end-artifact/build.zip --type zip --timeout 360
