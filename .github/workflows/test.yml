@@ -37,12 +37,13 @@ jobs:
         run: |
           cd my-app 
           npm run build
+          echo "Current directory: ${pwd}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: agri-swap-front-end-artifact
-          path: build/
+          path: my-app/build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -60,10 +61,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: agri-swap-front-end-artifact
-          path: build/agri-swap-front-end-artifact
+          path: build
 
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: bicep-template
           path: bicep-template
@@ -77,10 +78,10 @@ jobs:
           parameters: "webAppName=${{ env.WEBAPP-NAME }}"
           failOnStdErr: false
 
-      - name: Publish website to web App
-        if: false
+      - name: Deploy AgriSwap front end to azure
         uses: Azure/webapps-deploy@v3
         with:
           type: ZIP
           app-name: ${{ env.WEBAPP-NAME }}
-          package: build/
+          package: build
+          slot-name: development
