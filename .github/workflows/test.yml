@@ -30,17 +30,17 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cd agrswapapp
+          cd src/agrswapapp
           npm install
 
       - name: Build application
         run: |
-          cd agrswapapp
+          cd src/agrswapapp
           npm run build
 
       - name: Creating artifact zip file
         run: |
-          cd agrswapapp
+          cd src/agrswapapp
           zip -r ../build.zip .
 
       - name: Upload artifact
