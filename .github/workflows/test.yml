@@ -1,7 +1,7 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} build and deploy pipeline
 
-#Triger the build pipeline when there is a merge or a push in main branch
+# Trigger the build pipeline when there is a merge or a push in main branch
 on:
   push:
     branches:
@@ -77,21 +77,10 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: deploy
-        uses: azure/arm-deploy@v2
-        with:
-          scope: "resourcegroup"
-          subscriptionId: ${{ env.SUBSCRIPTION-ID }}
-          resourceGroupName: ${{ env.RESOURCE-GROUP }}
-          template: bicep-template/appService.bicep
-          parameters: |
-            "location=${{ env.LOCATION }}"
-          failOnStdErr: true
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # Use the secret containing Service Principal credentials
 
       - name: Deploy static web app
         env:
-          AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # Use the secret containing GitHub PAT
         run: |
-          az staticwebapp create --name ${{ env.STATIC-WEB-APP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --source https://github.com/EternalRex/agr-swap.git --branch main --location ${{ env.LOCATION }}
+          az staticwebapp create --name ${{ env.STATIC-WEB-APP-NAME }} --resource-group ${{ env.RESOURCE_GROUP }} --source https://github.com/EternalRex/agr-swap.git --branch main --location ${{ env.LOCATION }}
