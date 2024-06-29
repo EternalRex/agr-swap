@@ -82,15 +82,16 @@ jobs:
       - name: deploy
         uses: azure/arm-deploy@v2
         with:
+          scope: "resourcegroup"
           subscriptionId: ${{ env.SUBSCRIPTION-ID }}
           resourceGroupName: ${{ env.RESOURCE-GROUP }}
           template: bicep-template/appService.bicep
           parameters: |
             "location=${{ env.LOCATION }}"
-          failOnStdErr:
+          failOnStdErr: true
 
       - name: Deploy static web app
         env:
-          AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.PERSONAL_CLASSIC_GITHUB_TOKEN }}
         run: |
-          az staticwebapp create --name ${{ env.STATIC-WEB-APP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --source https://github.com/EternalRex/agr-swap.git --branch main --location ${{ env.LOCATION }}
+          az staticwebapp create --name ${{ env.STATIC-WEB-APP-NAME }} --resource-group ${{ env.RESOURCE-GROUP }} --source https://github.com/EternalRex/agr-swap.git --branch main --location ${{ env.LOCATION }} --login-with-github ${{ secrets.PERSONAL_CLASSIC_GITHUB_TOKEN }}
