@@ -78,7 +78,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }} # Use the secret containing Service Principal credentials
 
-      - name: Upload artifactss
+      - name: Upload artifactsss
         uses: actions/upload-artifact@v3
         with:
           name: agr-swap-artifacts
