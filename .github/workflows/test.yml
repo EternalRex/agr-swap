@@ -41,7 +41,7 @@ jobs:
       - name: Creating artifact zip file
         run: |
           cd src/agrswapapp
-          zip -r ../build.zip .
+          zip -r ../../build.zip .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
