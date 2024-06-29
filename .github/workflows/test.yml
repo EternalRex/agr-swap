@@ -37,7 +37,6 @@ jobs:
         run: |
           cd agrswapapp
           npm run build
-          echo "Current directory: ${pwd}"
 
       - name: Creating artifact zip file
         run: |
@@ -78,6 +77,12 @@ jobs:
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }} # Use the secret containing Service Principal credentials
+
+      - name: Upload artifactss
+        uses: actions/upload-artifact@v3
+        with:
+          name: agr-swap-artifacts
+          path: agri-swap-front-end-artifact
 
       - name: Deploy static web app
         env:
